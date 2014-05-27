@@ -16,7 +16,7 @@ var serialPort = new SerialPort("/dev/ttyAMA0", {
 //INIT APP
 var app = express();
 app.set('view engine', 'jade');
-app.use(express.static(__dirname + '/src'));
+app.use(express.static(__dirname + '/build'));
 var server = app.listen(3200, function() {
     console.log('DOMO SERVER listening on port %d', server.address().port);
 });
