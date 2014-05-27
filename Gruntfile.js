@@ -29,51 +29,60 @@ module.exports = function(grunt) {
     requirejs: {
       compile: {
         options: {
-          appDir: settings.srcDir,
-          dir: settings.appDir,
-          baseUrl: './js',
+          paths : {
+            requireLib : settings.srcDir + '../../vendor/requirejs/require'
+          },
+          include : ['requireLib'],
+          baseUrl: settings.srcDir + 'js',
           mainConfigFile: settings.srcDir + 'js/main.js',
           optimize: 'uglify2',
           optimizeCss: 'none',
-          modules: [
-            {
-              name: 'main'
-            }
-          ],
+          out: settings.appDir + 'js/build.js',
+          name: 'main',
           skipDirOptimize: true
         }
       }
     },
     copy: {
-      dist: {
+      main: {
         files: [
+          {
+            cwd: settings.srcDir,
+            expand: true,
+            src: ['img/**', 'data/*'],
+            dest: settings.appDir
+          },
           {
             cwd: settings.srcDir + 'vendor/bootstrap/',
             expand: true,
             src: ['*.eot', '*.svg', '*.ttf', '*.woff'],
             dest: settings.appDir + 'fonts/'
+          },
+          {
+            cwd: settings.srcDir + 'vendor/bootstrap/',
+            expand: true,
+            src: ['bootstrap.css'],
+            dest: settings.appDir + 'css/'
           }
         ]
       }
     },
-    concat: {
-      options: {
-        banner: '<%= banner %>',
-        stripBanners: true
+    clean: {
+      build: {
+        src: [settings.appDir]
       },
-      dist: {
-        src: ['lib/<%= pkg.name %>.js'],
-        dest: 'js/<%= pkg.name %>.js'
+      css: {
+          src: [
+            settings.appDir + 'css/*.css',
+            '!' + settings.appDir + 'css/build.css'
+          ]
       }
     },
-    uglify: {
-      options: {
-        banner: '<%= banner %>'
-      },
-      dist: {
-        src: '<%= concat.dist.dest %>',
-        dest: 'dist/<%= pkg.name %>.min.js'
-      }
+    cssmin: {
+        build: {
+            src: [settings.appDir + 'css/*.css'],
+            dest: settings.appDir + 'css/build.css',
+        }
     },
     jshint: {
       options: {
@@ -100,14 +109,15 @@ module.exports = function(grunt) {
   });
 
   // These plugins provide necessary tasks.
-  //grunt.loadNpmTasks('grunt-contrib-concat');
-  //grunt.loadNpmTasks('grunt-contrib-uglify');
-  //grunt.loadNpmTasks('grunt-contrib-jshint');
+
+  grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-bower-task');
   grunt.loadNpmTasks('grunt-contrib-requirejs');
   grunt.loadNpmTasks('grunt-contrib-copy');
+  grunt.loadNpmTasks('grunt-contrib-cssmin');
+  grunt.loadNpmTasks('grunt-contrib-clean');
 
   // Default task.
-  grunt.registerTask('default', ['bower', 'requirejs', 'copy']);
+  grunt.registerTask('default', ['jshint', 'clean:build', 'bower', 'requirejs', 'copy', 'cssmin', 'clean:css']);
 
 };

@@ -16,7 +16,7 @@ var serialPort = new SerialPort("/dev/ttyAMA0", {
 //INIT APP
 var app = express();
 app.set('view engine', 'jade');
-app.use(express.static(__dirname + '/build'));
+app.use(express.static(__dirname + '/src'));
 var server = app.listen(3200, function() {
     console.log('DOMO SERVER listening on port %d', server.address().port);
 });
@@ -71,13 +71,15 @@ function toggle(id) {
 
 function turnOn(id) {
   console.log('--> DEVICE ON: ' + id);
-  var command = id.toUpperCase();
+  //var command = id.toUpperCase();
+  var command = id + '1';
   send(command);
 }
 
 function turnOff(id) {
   console.log('--> DEVICE OFF: ' + id);
-  var command = id.toLowerCase();
+  //var command = id.toLowerCase();
+  var command = id + '0';
   send(command);
 }
 
