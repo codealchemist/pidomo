@@ -11,6 +11,8 @@ For the time being it's able to turn electrical devices on and off.
 Installation
 ------------
 
+    git clone https://github.com/codealchemist/pidomo.git
+    cd pidomo
     bower install
     npm install
     grunt
