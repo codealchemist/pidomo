@@ -44,6 +44,18 @@ module.exports = function(grunt) {
         }
       }
     },
+    copy: {
+      dist: {
+        files: [
+          {
+            cwd: settings.srcDir + 'vendor/bootstrap/',
+            expand: true,
+            src: ['*.eot', '*.svg', '*.ttf', '*.woff'],
+            dest: settings.appDir + 'fonts/'
+          }
+        ]
+      }
+    },
     concat: {
       options: {
         banner: '<%= banner %>',
@@ -93,8 +105,9 @@ module.exports = function(grunt) {
   //grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-bower-task');
   grunt.loadNpmTasks('grunt-contrib-requirejs');
+  grunt.loadNpmTasks('grunt-contrib-copy');
 
   // Default task.
-  grunt.registerTask('default', ['bower', 'requirejs']);
+  grunt.registerTask('default', ['bower', 'requirejs', 'copy']);
 
 };
