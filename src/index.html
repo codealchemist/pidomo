@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js" lang="en"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><![endif]-->
+        <title>Hello DOMO!</title>
+        <meta name="author" content="Alberto Miranda, b3rt.js@gmail.com">
+        <meta name="description" content="Domotics lights demo">
+        <meta name="viewport" content="width=device-width">
+
+        <link rel="stylesheet" href="vendor/bootstrap/bootstrap.css">
+        <link rel="stylesheet" href="css/main.css">
+        <link rel="stylesheet" href="css/responsive.css">
+    </head>
+    <body>
+        <!--[if lt IE 7]>
+            <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
+        <![endif]-->
+
+        <header id="main-header">
+            <div class="page-header">
+                <h1>DOMO <small>lights</small></h1>
+            </div>
+        </header>
+        
+        <section id="main-container">
+            <div id="message" class="alert alert-success hidden"></div>
+
+            <div class="buttons">
+                <div class="panel panel-default">
+                    <div class="panel-heading">DEVICE A</div>
+                    <div class="panel-body">
+                        <button class="led-switch btn btn-default btn-lg" data-id="a" data-command="switch">
+                            <span class="glyphicon glyphicon-off"></span> Switch
+                        </button>
+                        <button class="led-switch btn btn-success btn-lg" data-id="a" data-command="on">
+                            <span class="glyphicon glyphicon-off"></span> ON
+                        </button>
+                        <button class="led-switch btn btn-danger btn-lg" data-id="a" data-command="off">
+                            <span class="glyphicon glyphicon-off"></span> OFF
+                        </button>
+                    </div>
+                </div>
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">DEVICE B</div>
+                    <div class="panel-body">
+                        <button class="led-switch btn btn-default btn-lg" data-id="b" data-command="switch">
+                            <span class="glyphicon glyphicon-off"></span> Switch
+                        </button>
+                        <button class="led-switch btn btn-success btn-lg" data-id="b" data-command="on">
+                            <span class="glyphicon glyphicon-off"></span> ON
+                        </button>
+                        <button class="led-switch btn btn-danger btn-lg" data-id="b" data-command="off">
+                            <span class="glyphicon glyphicon-off"></span> OFF
+                        </button>
+                    </div>
+                </div>
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">DEVICE C</div>
+                    <div class="panel-body">
+                        <button class="led-switch btn btn-default btn-lg" data-id="c" data-command="switch">
+                            <span class="glyphicon glyphicon-off"></span> Switch
+                        </button>
+                        <button class="led-switch btn btn-success btn-lg" data-id="c" data-command="on">
+                            <span class="glyphicon glyphicon-off"></span> ON
+                        </button>
+                        <button class="led-switch btn btn-danger btn-lg" data-id="c" data-command="off">
+                            <span class="glyphicon glyphicon-off"></span> OFF
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <script type="text/javascript" data-main="js/main" src="vendor/requirejs/require.js"></script>
+    </body>
+</html>
+
+

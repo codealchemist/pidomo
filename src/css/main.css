@@ -1,0 +1,14 @@
+/* 
+    Created on : May 6, 2014, 7:19:14 PM
+    Author     : Alberto Miranda <b3rt.js@gmail.com>
+*/
+
+body {
+    margin: 5%;
+}
+
+.buttons {
+    position: absolute;
+    top: 200px;
+}
+

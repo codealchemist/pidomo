@@ -1,0 +1,19 @@
+/* 
+    Created on : May 6, 2014, 8:03:20 PM
+    Author     : Alberto Miranda <b3rt.js@gmail.com>
+*/
+
+@media all and (max-width: 540px) {
+    .message {
+        width: 300px;
+    }
+    
+    .collapsed .text:before {
+        width: 260px;
+    }
+
+    button {
+    	display: block !important;
+    	padding: 20px;
+    }
+}
