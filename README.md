@@ -20,8 +20,11 @@ Installation
     
 Use
 ---
+Start the server:
 
-Point your browser to your RaspberryPi's hostname or IP address at port 3200.
+    clear; node index.js
+
+Now point your browser to your RaspberryPi's hostname or IP address at port 3200.
 
 
 PICs implementation
