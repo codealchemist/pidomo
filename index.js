@@ -4,30 +4,17 @@ var express = require('express');
 //INIT SERIALPORT
 var SerialPort = serialport.SerialPort;
 var serialPort = new SerialPort("/dev/ttyAMA0", {
-  //parser: serialport.parsers.raw,
   //parser: serialport.parsers.readline("\r"),
   baudrate: 9600,
   dataBits: 8,
   parity: 'none',
   stopBits: 1,
   flowControl: false
-});
+}, false);
 
-//INIT APP
 var app = express();
-app.set('view engine', 'jade');
-app.use(express.static(__dirname + '/build'));
-var server = app.listen(3200, function() {
-    console.log('DOMO SERVER listening on port %d', server.address().port);
-});
-
-//receive data
-serialPort.on('data', function(data) {
-  console.log('--> data received: ' + data);
-});
 
 //------------------------------------------------------------------------------
-
 //ROUTES
 /*
 app.get('/', function(req, res){
@@ -35,22 +22,45 @@ app.get('/', function(req, res){
 });
 */
 
-app.get('/:id/switch', function(req, res){
-  var id = req.param('id');
-  res.json({"message": "DEVICE " + id + " SWITCHED."});
-  toggle(id);
+function setRoutes() {
+  app.get('/:id/switch', function(req, res){
+    var id = req.param('id');
+    res.json({"message": "DEVICE " + id + " SWITCHED."});
+    toggle(id);
+  });
+
+  app.get('/:id/on', function(req, res){
+    var id = req.param('id');
+    res.json({"message": "DEVICE " + id + " TURNED ON."});
+    turnOn(id);
+  });
+
+  app.get('/:id/off', function(req, res){
+    var id = req.param('id');
+    res.json({"message": "DEVICE " + id + " TURNED OFF."});
+    turnOff(id);
+  });
+}
+//------------------------------------------------------------------------------
+
+function initApp() {
+  app.set('view engine', 'jade');
+  app.use(express.static(__dirname + '/build'));
+  var server = app.listen(3200, function() {
+      console.log('PIDOMO SERVER listening on port %d', server.address().port);
+  });
+
+  setRoutes();
+}
+
+serialPort.open(function () {
+  console.log('SERIALPORT OPEN');
+  initApp();
 });
 
-app.get('/:id/on', function(req, res){
-  var id = req.param('id');
-  res.json({"message": "DEVICE " + id + " TURNED ON."});
-  turnOn(id);
-});
-
-app.get('/:id/off', function(req, res){
-  var id = req.param('id');
-  res.json({"message": "DEVICE " + id + " TURNED OFF."});
-  turnOff(id);
+//receive data
+serialPort.on('data', function(data) {
+  console.log('--> data received: ' + data);
 });
 
 //------------------------------------------------------------------------------
@@ -66,7 +76,8 @@ function send(command) {
 
 function toggle(id) {
   console.log('--> DEVICE SWITCH: ' + id);
-  send(id);
+  var command = id + '3';
+  send(command);
 }
 
 function turnOn(id) {
@@ -79,7 +90,7 @@ function turnOn(id) {
 function turnOff(id) {
   console.log('--> DEVICE OFF: ' + id);
   //var command = id.toLowerCase();
-  var command = id + '0';
+  var command = id + '2';
   send(command);
 }
 
