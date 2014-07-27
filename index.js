@@ -23,22 +23,25 @@ app.get('/', function(req, res){
 */
 
 function setRoutes() {
-  app.get('/:id/switch', function(req, res){
+  app.get('/:id/switch/:relay', function(req, res){
     var id = req.param('id');
-    res.json({"message": "DEVICE " + id + " SWITCHED."});
-    toggle(id);
+    var relay = req.param('relay') || 1;
+    res.json({"message": "DEVICE " + id + ", relay " + relay + " SWITCHED."});
+    toggle(id, relay);
   });
 
-  app.get('/:id/on', function(req, res){
+  app.get('/:id/on/:relay', function(req, res){
     var id = req.param('id');
-    res.json({"message": "DEVICE " + id + " TURNED ON."});
-    turnOn(id);
+    var relay = req.param('relay') || 1;
+    res.json({"message": "DEVICE " + id + ", relay " + relay + " TURNED ON."});
+    turnOn(id, relay);
   });
 
-  app.get('/:id/off', function(req, res){
+  app.get('/:id/off/:relay', function(req, res){
     var id = req.param('id');
-    res.json({"message": "DEVICE " + id + " TURNED OFF."});
-    turnOff(id);
+    var relay = req.param('relay') || 1;
+    res.json({"message": "DEVICE " + id + ", relay " + relay + " TURNED OFF."});
+    turnOff(id, relay);
   });
 }
 //------------------------------------------------------------------------------
@@ -51,6 +54,7 @@ function initApp() {
   });
 
   setRoutes();
+  testRelay2();
 }
 
 serialPort.open(function () {
@@ -74,23 +78,28 @@ function send(command) {
   });
 }
 
-function toggle(id) {
-  console.log('--> DEVICE SWITCH: ' + id);
-  var command = id + '3';
+function toggle(id, relay) {
+  console.log('--> DEVICE SWITCH: ' + id + ", relay " + relay);
+  var commandNumber = parseInt(relay, 10) * 3;
+  var command = id + commandNumber;
   send(command);
 }
 
-function turnOn(id) {
-  console.log('--> DEVICE ON: ' + id);
+function turnOn(id, relay) {
+  console.log('--> DEVICE ON: ' + id + ", relay " + relay);
   //var command = id.toUpperCase();
-  var command = id + '1';
+  var commandNumber = 1;
+  if (relay > 1) commandNumber += ( parseInt(relay, 10) - 1 ) * 3;
+  var command = id + commandNumber;
   send(command);
 }
 
-function turnOff(id) {
-  console.log('--> DEVICE OFF: ' + id);
+function turnOff(id, relay) {
+  console.log('--> DEVICE OFF: ' + id + ", relay " + relay);
   //var command = id.toLowerCase();
-  var command = id + '2';
+  var commandNumber = 2;
+  if (relay > 1) commandNumber += ( parseInt(relay, 10) - 1 ) * 3;
+  var command = id + commandNumber;
   send(command);
 }
 
@@ -147,5 +156,13 @@ function test() {
       }, 1000 * 2);
     }, 1000 * 2);
   }, 1000 * 2);
+}
+
+function testRelay2() {
+  console.log('TEST relay 2...');
+  send('a4');
+  setTimeout(function() {
+    send('a5');
+  }, 2000);
 }
 

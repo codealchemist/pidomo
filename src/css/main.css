@@ -12,3 +12,7 @@ body {
     top: 200px;
 }
 
+.buttons h4 {
+	display: inline;
+}
+

@@ -12,16 +12,17 @@ define([
             var $el = $(this),
                 data = $el.data(),
                 id = data.id,
-                command = data.command;
+                command = data.command,
+                relay = data.relay || 1;
 
-            log('SENDING COMMAND "' + command + '" TO DEVICE ' + id + '...');
-            sendCommand(id, command);
+            log('SENDING COMMAND "' + command + '" TO DEVICE ' + id + ', relay ' + relay + '...');
+            sendCommand(id, command, relay);
         });
     }
 
-    function sendCommand(id, command) {
-        log('DEVICE ' + command + ': ' + id);
-        $.get('/' + id + '/' + command, function(response){
+    function sendCommand(id, command, relay) {
+        log('DEVICE ' + id + ', relay ' + relay + ': ' + command);
+        $.get('/' + id + '/' + command + '/' + relay, function(response){
             log('RESPONSE:');
             console.log(response);
             if (response.message) {
