@@ -54,7 +54,6 @@ function initApp() {
   });
 
   setRoutes();
-  testRelay2();
 }
 
 serialPort.open(function () {
